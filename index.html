@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+		
+		<title>Weatheropedia</title>
+
+		<!-- Loading third party fonts -->
+		<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+		<!-- Loading main css file -->
+		<link rel="stylesheet" href="style.css">
+
+	</head>
+
+
+	<body>
+		
+		<div class="site-content">
+			<div class="site-header">
+				<div class="container">
+					<a href="index.html" class="branding">
+                     <div class="logo-type">
+							<h1 class="site-title">Weatheropedia</h1>
+							<small class="site-description">All your weather needs at one place</small>
+						</div>
+					</a>
+
+					<div class="main-navigation">
+						<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+						<ul class="menu">
+							<li class="menu-item current-menu-item"><a href="index.html">Home</a></li>
+						</ul>
+					</div>
+
+			</div>
+                </div>
+            </div>
+
+			<div class="hero" data-bg-image="images/banner.png">
+				<div class="container">
+					<form class="find-location" onsubmit="return false;">
+						<input type="text" id="city" placeholder="Find your location...">
+                        <button id="find">Find</button>
+					</form>
+
+				</div>
+			</div>
+			<div class="forecast-table">
+				<div class="container">
+                    <div class="forecast-container">
+                        <div class="today forecast">
+                            <div class="forecast-header">
+                                <div class="day">
+                                    <?php
+                                    echo "" . date("l");
+                                    ?>
+                                </div>
+                                <div class="date">
+                                    <?php
+                                    echo "".date="d-m"; ?>
+                                </div>
+                            </div>
+                            <div class="forecast-content">
+                                <div id="location" class="location"></div>
+                                <div class="degree">
+                                    <div id="temp" class="num"></div>
+                                </div>
+                                <span id="weather"></span>
+                                <span><img src="images/icon-wind.png" alt=""></span>
+                                <span id="wind"></span>
+                                <span><img src="images/icon-compass.png" alt="">East</span>
+                            </div>
+                        </div>
+                    </div>
+
+			<footer class="site-footer">
+				<div class="container">
+					<div class="row">
+                        <div class="col-md-3 col-md-offset-1">
+							<div class="social-links">
+								<a href="#"><i class="fa fa-facebook"></i></a>
+								<a href="#"><i class="fa fa-twitter"></i></a>
+								<a href="#"><i class="fa fa-google-plus"></i></a>
+								<a href="#"><i class="fa fa-pinterest"></i></a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</footer>
+		</div>
+		</div>
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/plugins.js"></script>
+        <script>
+$( "#find" ).click(function() {
+            var city = $('#city').val();
+            $.ajax({async: true,
+  crossDomain: true,url: "http://api.openweathermap.org/data/2.5/forecast?APPID=8995f720575e47873c8a000fe97da54b&units=metric&q=" + city,
+  method: "GET",
+  headers: {
+    "cache-control": "no-cache"
+  }, success: function(result){
+            console.log(result);
+            $("#temp").html(result.list[0].main.temp + "&#8451;");
+            $("#location").html(result.city.name);
+            $("#wind").html(result.list[0].wind.speed);
+            $("#weather").html(result.list[0].weather[0].description);
+        }});
+});
+        </script>
+		
+	</body>
+
+
+</html>
